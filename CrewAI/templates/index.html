@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Window</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Chat Title</h2>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot">
+                <p>Hi there! Please ask me anything about 2025 IPL Schedule?</p>
+            </div>
+
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script>
+        const messageInput = document.getElementById('message-input')
+        const sendButton = document.getElementById('send-button')
+        const chatMessages = document.getElementById('chat-messages')
+
+        sendButton.addEventListener('click', sendMessage)
+        messageInput.addEventListener('keydown', function(event) {
+            if(event.key === 'Enter') {
+                sendMessage()
+            }
+        })
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if(message!= "") {
+                addMessage(message, 'user')
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                messageInput.value = ""
+                fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+
+                }).then(response => response.json())
+                .then(data => {
+                    addMessage(data.answer_response, 'bot')
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    addMessage("Error communicating with the chatbot.", 'bot');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                })
+            }
+        }
+
+        function addMessage(message, sender) {
+            const messageDiv = document.createElement("addDiv")
+            messageDiv.classList.add('message', sender)
+            messageDiv.innerHTML = `<p>${message}</p>`;
+            chatMessages.appendChild(messageDiv);
+        }
+    </script>
+</body>
+</html>

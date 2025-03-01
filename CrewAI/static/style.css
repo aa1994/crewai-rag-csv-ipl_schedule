@@ -1,0 +1,79 @@
+/* style.css */
+.chat-container {
+    width: 400px;
+    height: 500px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif; /* Use a common font */
+}
+
+.chat-header {
+    background-color: #eee;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.chat-messages {
+    flex-grow: 1; /* Makes the message area expand to fill available space */
+    overflow-y: scroll; /* Adds a scrollbar if messages overflow */
+    padding: 10px;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    max-width: 70%; /* Prevents long messages from stretching the container */
+    clear: both; /* Prevents floating issues */
+}
+
+.user {
+    background-color: #e0f2f7; /* Light blue for user messages */
+    float: right; /* Align user messages to the right */
+    text-align: right;
+}
+
+.bot {
+    background-color: #f1f0f0; /* Light gray for bot messages */
+    float: left; /* Align bot messages to the left */
+    text-align: left;
+}
+
+.chat-input {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    display: flex;
+}
+
+.chat-input input[type="text"] {
+    flex-grow: 1; /* Makes the input field take up available space */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.chat-input button {
+    padding: 8px 12px;
+    background-color: #4CAF50; /* Green send button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Optional: Style the scrollbar */
+.chat-messages::-webkit-scrollbar {
+    width: 8px; /* Adjust scrollbar width */
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Scrollbar track color */
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar thumb color */
+    border-radius: 4px;
+}
